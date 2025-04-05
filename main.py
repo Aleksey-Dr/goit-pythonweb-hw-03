@@ -10,7 +10,7 @@ STORAGE_PATH = pathlib.Path().joinpath('storage')
 STORAGE_PATH.mkdir(exist_ok=True)
 DATA_FILE = STORAGE_PATH.joinpath('data.json')
 
-env = Environment(loader=FileSystemLoader('.'))
+env = Environment(loader=FileSystemLoader('templates'))
 
 class HttpHandler(BaseHTTPRequestHandler):
     def do_POST(self):
@@ -53,7 +53,7 @@ class HttpHandler(BaseHTTPRequestHandler):
         self.send_response(status)
         self.send_header('Content-type', 'text/html')
         self.end_headers()
-        with open(filename, 'rb') as fd:
+        with open(f'templates/{filename}', 'rb') as fd:
             self.wfile.write(fd.read())
 
     def send_static(self):
